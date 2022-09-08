@@ -12,8 +12,8 @@
 [Cookies extract](https://youtu.be/G7s0eGOaRPE)
 
 ## VS code tips and tricks
-[25 VS Code Productivity Tips and Speed Hacks](https://youtu.be/ifTF3ags0XI)
-    - множественное выделение
-    - множественный курсор
-    - массовое переименование функций в файлах
-    - работа с репозиториями
+[25 VS Code Productivity Tips and Speed Hacks](https://youtu.be/ifTF3ags0XI)<br>
+    - множественное выделение<br>
+    - множественный курсор<br>
+    - массовое переименование функций в файлах<br>
+    - работа с репозиториями<br>
