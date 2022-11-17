@@ -20,11 +20,11 @@
 [Scrape LIVE scores - No BeautifulSoup or Selenium NEEDED!](https://youtu.be/hV5k1XbcZXA)
 
 ## VS code tips and tricks
-[25 VS Code Productivity Tips and Speed Hacks](https://youtu.be/ifTF3ags0XI)<br>
-    - множественное выделение<br>
-    - множественный курсор<br>
-    - массовое переименование функций в файлах<br>
+[25 VS Code Productivity Tips and Speed Hacks](https://youtu.be/ifTF3ags0XI)
+    - множественное выделение
+    - множественный курсор
+    - массовое переименование функций в файлах
     - работа с репозиториями<br>
 [Выложить свой проект на GitHub c VScode за 2 минуты](https://www.youtube.com/watch?v=rGMdtlAMmE0)<br>
 [Git config: настройка (редактор, пользователь, команды)](https://youtu.be/6k8pNsCLtFI)
-
+[Установка git bash в терминал VS Code для Windows](https://youtu.be/6HEB72EczL8)
