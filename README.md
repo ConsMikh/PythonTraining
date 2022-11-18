@@ -13,6 +13,8 @@
 ## Matplotlib
 [Метки на графике](https://linuxhint.com/labels-matplotlib/)
 
+## Linters for clean code
+[Pylint](https://pylint.pycqa.org/en/latest/)
 
 ## Site scrapping
 [API check](https://youtu.be/DqtlR0y0suo)<br>
