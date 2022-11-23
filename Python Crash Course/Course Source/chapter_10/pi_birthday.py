@@ -1,4 +1,4 @@
-filename = 'pi_million_digits.txt'
+filename = 'D:\\3. Михайлов\\Develop\\PythonTraining\\PythonTraining\\Python Crash Course\\Course Source\\chapter_10\\pi_million_digits.txt'
 
 with open(filename) as file_object:
     lines = file_object.readlines()
