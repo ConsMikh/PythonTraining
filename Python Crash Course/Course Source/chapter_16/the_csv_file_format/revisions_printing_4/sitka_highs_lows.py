@@ -31,5 +31,6 @@ ax.set_xlabel('', fontsize=16)
 fig.autofmt_xdate()
 ax.set_ylabel("Temperature (F)", fontsize=16)
 ax.tick_params(axis='both', which='major', labelsize=16)
+plt.fill_between(dates, highs, lows, facecolor='red', alpha=0.1)
 
 plt.show()

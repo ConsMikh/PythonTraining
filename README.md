@@ -10,8 +10,11 @@
 [Шпаргалка по pandas](https://habr.com/ru/company/ruvds/blog/494720/)<br>
 [Pandas Python агрегация данных сводные таблицы](https://youtu.be/3FKTUa7y7jQ)
 
-## Matplotlib
+## Visualization
+#### Matplotlib
 [Метки на графике](https://linuxhint.com/labels-matplotlib/)
+#### Plotly
+[Plotly Open Source Graphing Library for Python](https://plotly.com/python/)
 
 ## Clean code
 [Pylint](https://pylint.pycqa.org/en/latest/)
