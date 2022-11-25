@@ -3,6 +3,12 @@
 [Telegram Bot на Python / Создания ботов для начинающих за 30 минут](https://youtu.be/HodO2eBEz_8)
 [18 Фишек Python о которых мало кто говорит](https://youtu.be/5yrit_XDgOQ)
 
+## Virtual Envirements
+[Ошибка «Невозможно загрузить файл ….ps1, так как выполнение сценариев отключено в этой системе»](https://zawindows.ru/решение-проблемы-невозможно-загруз/)
+Get-ExecutionPolicy
+Set-ExecutionPolicy unrestricted
+
+
 ## Pandas
 [Применение SQL к DataFrame](https://towardsdatascience.com/how-to-use-sql-in-pandas-62d8a0f6341)<br>
 [Загрузка DataFrame из базы данных](https://medium.com/analytics-vidhya/importing-data-from-a-mysql-database-into-pandas-data-frame-a06e392d27d7)<br>
