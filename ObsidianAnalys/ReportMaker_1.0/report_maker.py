@@ -23,20 +23,39 @@ Report maker 0.0.1
 4. Использовать классы
     - не использовать глобальные переменные
     - использовать наследование
-
-На будущее
-- покрыть тестами
-- для недельного отчета неделя может кодироваться 1 датой, которая входит в неделю либо порядковым номером недели
-- создание менеджера отчета для проектных отчетов
-- формирование визуализации в соответствии с templates
 '''
 
+import sys
+import argparse
+from manager import WeekManager
+
+def createParser ():
+    '''Реализация парсера входных аргументов'''
+    parser = argparse.ArgumentParser()
+    subparsers = parser.add_subparsers (dest='command')
+ 
+    week_parser = subparsers.add_parser ('week')
+    week_parser.add_argument ('--startdate', '-s', required=True)
+    week_parser.add_argument ('--lastdate', '-l', required=True)
+    week_parser.add_argument ('--deep', '-d', type=int, choices= range(1,5), default=3)
+    week_parser.add_argument ('--vistype', '-vt', choices= ['short', 'long', 'full'], default= 'full')
+    week_parser.add_argument ('--visout', '-vo', choices= ['json', 'screen', 'md'], default= 'screen')
+
+    return parser
+
 def main():
-    '''Парсинг параметров командной строки
-    Создание менеджера задачи в зависимости от типа
-    '''
-    pass
+    '''Парсинг параметров командной строки'''
+    parser = createParser()
+    namespace = parser.parse_args(sys.argv[1:])
+    # print(namespace)
+
+    '''Создание менеджера задачи в зависимости от типа'''
+    match namespace.command:
+        case 'week': 
+            week_manager = WeekManager()
+            week_manager.setTask(namespace.startdate, namespace.lastdate, namespace.deep, namespace.vistype, namespace.visout, 'setting.ini')
+            week_manager.isTaskValid()
+        case 'theme': print('THEEEME')
 
 if __name__ == "__main__":
-    '''Считывание параметров командной строки'''
     main()
