@@ -32,13 +32,17 @@
 '''
 
 import datetime
+import configparser
+
+
+from analyzer import AnalyzerManager
 
 class WeekManager():
     '''Менеджер для создания недельно отчета'''
 
     def __init__(self) -> None:
         self.log = [] # log list for writing error in parameters
-        self.isvalid = False
+        self.analyst = {}
 
     def setTask(self, startdate, lastdate, deep, vistype, visout, settingspath):
         '''Получение параметров для создания отчета'''
@@ -67,14 +71,44 @@ class WeekManager():
                 self.log.append(f'Конечная дата раньше начальной\n')
 
     def checkSettings(self):
-        pass
-            
+        try:
+            config = configparser.ConfigParser()
+            config.read(self.settingspath)
+        except:
+            self.log.append(f'Файл с настройками недоступен\n')
+        else:
+            if config.get("local_path","week_report") == '':
+                self.log.append(f'Отсутсвует путь до папки с еженедельными отчетами\n')
+            if config['local_path']['daily_notes'] == '':
+                self.log.append(f'Отсутсвует путь до папки с еженедельными заметками\n')
+            if config['local_path']['kbase_notes'] == '':
+                self.log.append(f'Отсутсвует путь до папки с заметками\n')
+            if config['analyst']['norma_pom'] == '':
+                self.log.append(f'Отсутсвует нормативное значение помидорок\n')
+
     def isTaskValid(self):
         '''Проверка параметров отчета на валидность'''
         self.checkDateFormate(self.startdate)
         self.checkDateFormate(self.lastdate)
         self.checkPeriod()
         self.checkSettings()
+        if len(self.log) == 0:
+            return True
+        else:
+            return False
+
+    def startTask(self):
+        '''Запуск анализа'''
+        analyzer = AnalyzerManager()
+        analyzer.setAnalyst(self.startdate, self.lastdate, self.deep, self.analyst, self.settingspath)
+        analyzer.startAnalyst()
+        print(f'Analyzed: {analyzer.getAnalystLog()}')
+        print(f'Log: {analyzer.getLog()}')
+
+    def getLog(self):
+        '''Доступ к логу выполнения задачи'''
+        return self.log
+
 
 
 # Менеджер задачи для проектного отчета

@@ -12,5 +12,14 @@
             "console": "integratedTerminal",
             "justMyCode": true
         }
+        {
+            "name": "Python: текущий файл с аргументами",
+            "type": "python",
+            "request": "launch",
+            "program": "${file}",
+            "console": "integratedTerminal",
+            "justMyCode": true,
+            "args" : ["week", "-s", "2022-11-21", "-l","2022-11-26"]
+        }
     ]
 }

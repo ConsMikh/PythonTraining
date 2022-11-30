@@ -35,8 +35,10 @@ def createParser ():
     subparsers = parser.add_subparsers (dest='command')
  
     week_parser = subparsers.add_parser ('week')
-    week_parser.add_argument ('--startdate', '-s', required=True)
-    week_parser.add_argument ('--lastdate', '-l', required=True)
+#    week_parser.add_argument ('--startdate', '-s', required=True)
+#    week_parser.add_argument ('--lastdate', '-l', required=True)
+    week_parser.add_argument ('--startdate', '-s', default='2022-11-21')
+    week_parser.add_argument ('--lastdate', '-l', default='2022-11-27')
     week_parser.add_argument ('--deep', '-d', type=int, choices= range(1,5), default=3)
     week_parser.add_argument ('--vistype', '-vt', choices= ['short', 'long', 'full'], default= 'full')
     week_parser.add_argument ('--visout', '-vo', choices= ['json', 'screen', 'md'], default= 'screen')
@@ -54,7 +56,11 @@ def main():
         case 'week': 
             week_manager = WeekManager()
             week_manager.setTask(namespace.startdate, namespace.lastdate, namespace.deep, namespace.vistype, namespace.visout, 'setting.ini')
-            week_manager.isTaskValid()
+            if week_manager.isTaskValid():
+                print ('Параметры задачи корректны')
+                week_manager.startTask()
+            else:
+                print (*week_manager.getLog()) 
         case 'theme': print('THEEEME')
 
 if __name__ == "__main__":
