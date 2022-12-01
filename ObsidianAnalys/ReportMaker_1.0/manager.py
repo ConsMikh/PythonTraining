@@ -36,6 +36,7 @@ import configparser
 
 
 from analyzer import AnalyzerManager
+from visualizer import VisualizerManager
 
 class WeekManager():
     '''Менеджер для создания недельно отчета'''
@@ -73,11 +74,11 @@ class WeekManager():
     def checkSettings(self):
         try:
             config = configparser.ConfigParser()
-            config.read(self.settingspath)
+            config.read('D:\\3. Михайлов\\Develop\\PythonTraining\\PythonTraining\\ObsidianAnalys\\ReportMaker_1.0\\'+self.settingspath)
         except:
             self.log.append(f'Файл с настройками недоступен\n')
         else:
-            if config.get("local_path","week_report") == '':
+            if config.get('local_path','week_report') == '':
                 self.log.append(f'Отсутсвует путь до папки с еженедельными отчетами\n')
             if config['local_path']['daily_notes'] == '':
                 self.log.append(f'Отсутсвует путь до папки с еженедельными заметками\n')
@@ -102,8 +103,11 @@ class WeekManager():
         analyzer = AnalyzerManager()
         analyzer.setAnalyst(self.startdate, self.lastdate, self.deep, self.analyst, self.settingspath)
         analyzer.startAnalyst()
-        print(f'Analyzed: {analyzer.getAnalystLog()}')
+        print(f'Analyzed: {analyzer.getResult()}')
         print(f'Log: {analyzer.getLog()}')
+        visualizer = VisualizerManager()
+        visualizer.setVisual(self.vistype, self.visout, analyzer.getResult())
+        visualizer.startVisual()
 
     def getLog(self):
         '''Доступ к логу выполнения задачи'''
