@@ -35,8 +35,8 @@ import datetime
 import configparser
 
 
-from analyzer import AnalyzerManager
-from visualizer import VisualizerManager
+from analyzer import WeekAnalyzerManager
+from visualizer import WeekVisualizerManager
 
 class WeekManager():
     '''Менеджер для создания недельно отчета'''
@@ -46,13 +46,21 @@ class WeekManager():
         self.analyst = {}
 
     def setTask(self, startdate, lastdate, deep, vistype, visout, settingspath):
-        '''Получение параметров для создания отчета'''
+        '''Получение параметров для создания отчета, настройка задачи
+        startdate - дата начала анализа
+        lastdate - дата конца анализа
+        deep - глубина анализа (1 - до темы, 2 - до эпика, 3 - до проекта, 4 - до задачи)
+        vistype
+        visout
+        settingspath
+        '''
         self.startdate = startdate
         self.lastdate = lastdate
         self.deep = deep
         self.vistype = vistype
         self.visout = visout
         self.settingspath = settingspath
+        self.config = configparser.ConfigParser()
     
     def checkDateFormate(self, date):
         '''Проверка формата даты'''
@@ -72,19 +80,20 @@ class WeekManager():
                 self.log.append(f'Конечная дата раньше начальной\n')
 
     def checkSettings(self):
+        '''Проверка файла настроек'''
         try:
-            config = configparser.ConfigParser()
-            config.read('D:\\3. Михайлов\\Develop\\PythonTraining\\PythonTraining\\ObsidianAnalys\\ReportMaker_1.0\\'+self.settingspath)
+            
+            self.config.read('D:\\3. Михайлов\\Develop\\PythonTraining\\PythonTraining\\ObsidianAnalys\\ReportMaker_1.0\\'+self.settingspath)
         except:
             self.log.append(f'Файл с настройками недоступен\n')
         else:
-            if config.get('local_path','week_report') == '':
+            if self.config.get('local_path','week_report') == '':
                 self.log.append(f'Отсутсвует путь до папки с еженедельными отчетами\n')
-            if config['local_path']['daily_notes'] == '':
+            if self.config['local_path']['daily_notes'] == '':
                 self.log.append(f'Отсутсвует путь до папки с еженедельными заметками\n')
-            if config['local_path']['kbase_notes'] == '':
+            if self.config['local_path']['kbase_notes'] == '':
                 self.log.append(f'Отсутсвует путь до папки с заметками\n')
-            if config['analyst']['norma_pom'] == '':
+            if self.config['analyst']['norma_pom'] == '':
                 self.log.append(f'Отсутсвует нормативное значение помидорок\n')
 
     def isTaskValid(self):
@@ -100,13 +109,11 @@ class WeekManager():
 
     def startTask(self):
         '''Запуск анализа'''
-        analyzer = AnalyzerManager()
+        analyzer = WeekAnalyzerManager()
         analyzer.setAnalyst(self.startdate, self.lastdate, self.deep, self.analyst, self.settingspath)
         analyzer.startAnalyst()
-        print(f'Analyzed: {analyzer.getResult()}')
-        print(f'Log: {analyzer.getLog()}')
-        visualizer = VisualizerManager()
-        visualizer.setVisual(self.vistype, self.visout, analyzer.getResult())
+        visualizer = WeekVisualizerManager()
+        visualizer.setVisual(self.vistype, self.visout, analyzer.getResult(), self.config.get('local_path','week_report'))
         visualizer.startVisual()
 
     def getLog(self):

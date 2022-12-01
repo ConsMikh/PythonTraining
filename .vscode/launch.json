@@ -5,6 +5,7 @@
     "version": "0.2.0",
     "configurations": [
 
+
         {
             "name": "Python: текущий файл",
             "type": "python",
@@ -20,7 +21,7 @@
             "program": "${file}",
             "console": "integratedTerminal",
             "justMyCode": true,
-            "args" : ["week", "-s", "2022-11-21", "-l","2022-11-27"]
+            "args" : ["week", "-s", "2022-11-21", "-l","2022-11-27", "-vt", "full", "-vo", "md"]
         }
     ]
 }

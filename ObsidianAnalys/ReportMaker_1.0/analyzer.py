@@ -1,56 +1,8 @@
 import pandas as pd
-
-
-# Парсер для глубины 3
-'''
-Получает содержание файла
-Выделяет раздел с описание помидорок
-Преобразует записи о помидорках в словарь, установленной глубины
-Возвращает словарь
-'''
-
-# Агрегатор
-'''
-Получает 
-    словарь лога проверки
-
-Считает сумму помидорок по проектам
-
-Считает обобщенные характеристики
-    + сколько всего дней для анализа
-    + список дат, для которых не нашлось файлов
-    + список рубрик, которые попались
-    + список эпиков для каждой рубрики
-    + общее количество учтенных полезных помидорок
-    + подсчет процента учтенных полезных помидорок относительно нормативного
-    - количество неполных записей о помидорке
-
-Возвращает агрегированный словарь
-'''
-
-# Менеджер анализатора
-'''
-Получает 
-    список дат
-    Локальные пути
-    Глубину поиска
-    Словарь для хранения результатов анализа
-
-Создает словарь лога проверки
-
-В цикле формирует путь к файлу, пытается его открыть
-    Если открылся, то вызывает парсер файла, соответствующий глубине поиска
-    Накапливает данные за весь набор дат в словаре лога проверки
-
-Вызывает агрегатор
-
-Возвращает словарь для хранения результатов анализа
-'''
-
 import datetime
 import configparser
 
-class AnalyzerManager():
+class WeekAnalyzerManager():
 
     def __init__(self) -> None:
         self.log = []
@@ -58,6 +10,7 @@ class AnalyzerManager():
         self.analyst_result = {}
 
     def setAnalyst(self, startdate, lastdate, deep, analyst, settingspath):
+        '''Настройка анализатора'''
         self.start_date = startdate
         self.last_date = lastdate
         self.deep = deep
@@ -78,8 +31,7 @@ class AnalyzerManager():
 
     def getDatesList(self):
         '''Определитель списка дат 
-        Получает начальую дату
-        и конечную дату
+        Получает начальую дату и конечную дату
         Возвращет все даты из указанного диапазона
         '''
         start_date = datetime.date.fromisoformat(self.start_date)
@@ -90,6 +42,7 @@ class AnalyzerManager():
             ).strftime('%Y-%m-%d').tolist()
 
     def lineAnalyst(self, line):
+        '''Разбиение и преобразование строки с помидорками'''
         line_parts = line.split(':')
         theme = line_parts[0]
         project = line_parts[1]
@@ -102,6 +55,7 @@ class AnalyzerManager():
         return theme, project, int(timespend)
 
     def parser(self, lines, date):
+        '''Подсчет помидорок в одном файле'''
         themes = []
         result = {'date': date}
         pomidor = 0
@@ -148,24 +102,19 @@ class AnalyzerManager():
         self.analyst_result['effective_all_days'] = round(total_pom*100.0/float(self.analyst_result['max_pom_all_days']),2)
         self.analyst_result['effective_know_days'] = round(total_pom*100.0/float(self.analyst_result['max_pom_know_days']),2)
 
-              
-
     def startAnalyst(self):
+        '''Запуск анализа'''
         dates_list = self.getDatesList()
         daily_notes_path = self.config['local_path']['daily_notes']
         for analyzed_date in dates_list:
-            print(analyzed_date)
             try:
                 with open(daily_notes_path + '\\' + analyzed_date +'.md', encoding="utf-8") as f:
-                    print(daily_notes_path + '\\' + analyzed_date +'.md ' + 'open')
                     lines = f.readlines()
                     self.analyst_log.append(self.parser(lines, analyzed_date))
             except: 
                 self.log.append('Дата ' + analyzed_date + ' отсутствует')
                 self.analyst_result['lost_dates'].append(analyzed_date)
         self.aggregate()
-
-
 
     def getLog(self):
         return self.log
