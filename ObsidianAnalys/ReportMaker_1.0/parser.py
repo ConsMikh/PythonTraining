@@ -7,7 +7,7 @@
 Добавление к дереву нового узла или перезапись существующего узла
 Возврат дерева
 '''
-from anytree import AnyNode, RenderTree
+from anytree import AnyNode, RenderTree, LevelOrderGroupIter
 from anytree.exporter import DictExporter
 
 class Parser():
@@ -26,7 +26,6 @@ class Parser():
                 self.checkNode(pom_record)
             if '#Помидорки' in line:
                 pomidor = 1
-        self.aggNodes()
     
     def aggNodes(self):
         '''
@@ -38,7 +37,15 @@ class Parser():
 
         Получится, что все узлы будут содержать сумму помидорок для всех детей
         '''
-        pass
+        levels_list = [[node for node in children] for children in LevelOrderGroupIter(self.root)]
+
+        for level_list in list(reversed(levels_list[:-1])):
+            for node in level_list:
+                for childnode in node.children:
+                    try:
+                        node.pom_num += childnode.pom_num
+                    except:
+                        node.pom_num = childnode.pom_num
 
     def parseLine(self, line):
         line_parts = line.split(':')
@@ -74,18 +81,10 @@ class Parser():
             except:
                 self.nodes[path] = AnyNode(id=node, parent = parent)
                 parent = self.nodes[path]
-        if(len(parent.children)>0):
-            self.replaceNode(parent, pom_record[-1])
-        else:
-            self.addNode(path, parent, pom_record[-1])
-
-    def addNode(self, path, parent, add_val):
-        path += 'Pom_num'
-        self.nodes[path] = AnyNode(id="Pomidor", parent = parent, pom_num = add_val)
-
-    def replaceNode(self, parent, add_val):
-        parent.children[0].pom_num = int(parent.children[0].pom_num) + int(add_val)
-        pass
+        try:
+            parent.pom_num += pom_record[-1]
+        except:
+            parent.pom_num = pom_record[-1]
 
     def getTreeDict(self):
         exporter = DictExporter()

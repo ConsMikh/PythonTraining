@@ -14,7 +14,7 @@ for date in analyzed_date:
     except: 
         print('Дата ' + date + ' отсутствует')
 
+
+parser.aggNodes()
+
 parser.renderTree()
-print(parser.getTree())
-
-
