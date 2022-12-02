@@ -13,6 +13,8 @@ for date in analyzed_date:
             parser.parseFile(lines)
     except: 
         print('Дата ' + date + ' отсутствует')
+
 parser.renderTree()
+print(parser.getTree())
 
 

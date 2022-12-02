@@ -7,13 +7,14 @@
 Добавление к дереву нового узла или перезапись существующего узла
 Возврат дерева
 '''
-from anytree import Node, Resolver, RenderTree
+from anytree import AnyNode, RenderTree
+from anytree.exporter import DictExporter
 
 class Parser():
 
-    def __init__(self, deep=4):
+    def __init__(self, deep=3):
         self.deep = deep
-        self.root = Node('detail', parent=None)
+        self.root = AnyNode(id='detail')
         self.nodes = {}
 
     def parseFile(self, lines):
@@ -25,6 +26,19 @@ class Parser():
                 self.checkNode(pom_record)
             if '#Помидорки' in line:
                 pomidor = 1
+        self.aggNodes()
+    
+    def aggNodes(self):
+        '''
+        Идея:
+        Получить списки для все уровней дерева, используя итератор дерева:
+        https://anytree.readthedocs.io/en/latest/api/anytree.iterators.html
+
+        Для каждого уровня, начиная с нижнего, посчитать сумму помидорок для детей каждого узла
+
+        Получится, что все узлы будут содержать сумму помидорок для всех детей
+        '''
+        pass
 
     def parseLine(self, line):
         line_parts = line.split(':')
@@ -50,27 +64,35 @@ class Parser():
         return pom_rec
 
     def checkNode(self, pom_record):
+        path = ''
         parent = self.root
         for node in pom_record[:-1]:
+            path += node
             try:
-                if self.nodes[node] in parent.children:
-                    parent = self.nodes[node]
+                if self.nodes[path] in parent.children:
+                    parent = self.nodes[path]
             except:
-                self.nodes[node] = Node(node, parent = parent)
-                parent = self.nodes[node]
-            else:
-                pass
+                self.nodes[path] = AnyNode(id=node, parent = parent)
+                parent = self.nodes[path]
+        if(len(parent.children)>0):
+            self.replaceNode(parent, pom_record[-1])
+        else:
+            self.addNode(path, parent, pom_record[-1])
 
+    def addNode(self, path, parent, add_val):
+        path += 'Pom_num'
+        self.nodes[path] = AnyNode(id="Pomidor", parent = parent, pom_num = add_val)
 
-    def addNode(self):
+    def replaceNode(self, parent, add_val):
+        parent.children[0].pom_num = int(parent.children[0].pom_num) + int(add_val)
         pass
 
-    def replaceNode(self):
-        pass
+    def getTreeDict(self):
+        exporter = DictExporter()
+        return exporter.export(self.root)
 
-    def transformTree(self):
-        pass 
+    def getTree(self):
+        return self.root, self.nodes
 
     def renderTree(self):
-        for pre, _, node in RenderTree(self.root):
-            print("%s%s" % (pre, node.name))
+        print(RenderTree(self.root))
