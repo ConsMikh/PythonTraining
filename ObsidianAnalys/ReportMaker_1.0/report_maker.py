@@ -34,10 +34,11 @@ def createParser ():
     parser = argparse.ArgumentParser()
     subparsers = parser.add_subparsers (dest='command')
  
-    week_parser = subparsers.add_parser ('week')
+    week_parser = subparsers.add_parser ('period')
     week_parser.add_argument ('--startdate', '-s', required=True)
     week_parser.add_argument ('--lastdate', '-l', required=True)
     week_parser.add_argument ('--deep', '-d', type=int, choices= range(1,5), default=3)
+    week_parser.add_argument ('--type', '-t', choices= ['period', 'week'], default='period')
     week_parser.add_argument ('--vistype', '-vt', choices= ['short', 'detail', 'full'], default= 'full')
     week_parser.add_argument ('--visout', '-vo', choices= ['json', 'screen', 'md'], default= 'screen')
 
@@ -49,9 +50,9 @@ def main():
     namespace = parser.parse_args(sys.argv[1:])
     '''Создание менеджера задачи в зависимости от типа'''
     match namespace.command:
-        case 'week': 
+        case 'period': 
             week_manager = WeekManager()
-            week_manager.setTask(namespace.startdate, namespace.lastdate, namespace.deep, namespace.vistype, namespace.visout, 'setting.ini')
+            week_manager.setTask(namespace.startdate, namespace.lastdate, namespace.deep, namespace.type, namespace.vistype, namespace.visout, 'setting.ini')
             if week_manager.isTaskValid():
                 print ('Параметры задачи корректны')
                 week_manager.startTask()

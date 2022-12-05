@@ -82,4 +82,7 @@ class WeekAnalyzerManager():
     
     def getResult(self):
         return self.analyst_result
+    
+    def getDetailedResult(self):
+        return self.parser_result
 

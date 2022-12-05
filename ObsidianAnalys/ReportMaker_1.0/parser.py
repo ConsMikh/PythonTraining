@@ -14,7 +14,7 @@ class Parser():
 
     def __init__(self, deep=3):
         self.deep = deep
-        self.root = AnyNode(id='detail')
+        self.root = AnyNode(id='Всего')
         self.nodes = {}
 
     def parseFile(self, lines):

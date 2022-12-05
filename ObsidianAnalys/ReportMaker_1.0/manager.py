@@ -45,7 +45,7 @@ class WeekManager():
         self.log = [] # log list for writing error in parameters
         self.analyst = {}
 
-    def setTask(self, startdate, lastdate, deep, vistype, visout, settingspath):
+    def setTask(self, startdate, lastdate, deep, type, vistype, visout, settingspath):
         '''Получение параметров для создания отчета, настройка задачи
         startdate - дата начала анализа
         lastdate - дата конца анализа
@@ -57,6 +57,7 @@ class WeekManager():
         self.startdate = startdate
         self.lastdate = lastdate
         self.deep = deep
+        self.type = type
         self.vistype = vistype
         self.visout = visout
         self.settingspath = settingspath
@@ -112,8 +113,10 @@ class WeekManager():
         analyzer = WeekAnalyzerManager()
         analyzer.setAnalyst(self.startdate, self.lastdate, self.deep, self.analyst, self.settingspath)
         analyzer.startAnalyst()
+        analyzer.aggregate()
+
         visualizer = WeekVisualizerManager()
-        visualizer.setVisual(self.vistype, self.visout, analyzer.getResult(), self.config.get('local_path','week_report'))
+        visualizer.setVisual(self.vistype, self.visout, analyzer.getResult(), analyzer.getDetailedResult(), self.type, self.config.get('local_path','week_report'))
         visualizer.startVisual()
 
     def getLog(self):

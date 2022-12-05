@@ -49,14 +49,16 @@
 '''
 
 import json
+from anytree.importer import DictImporter
+from anytree import Node, RenderTree
 
 class WeekVisualizerManager:
 
     def __init__(self):
         pass
 
-    def setVisual(self, vis_type, vis_out, data, report_path):
-        '''Настройка процесса визализации
+    def setVisual(self, vis_type, vis_out, data, detail,  type, report_path):
+        '''Настройка процесса визуализации
         vis_type - полнота визуализации (сокращенный, детальный, полный)
         vis_out - метод вывода отчета (экран, файл json, файл md)
         data - данные для визуализации
@@ -65,21 +67,31 @@ class WeekVisualizerManager:
         self.vis_type = vis_type
         self.vis_out = vis_out
         self.data = data
+        self.type = type
+        self.detail = detail
+        self.report_path = report_path
+
         self.title = []
         self.short_part = []
         self.detail_part = []
-        self.report_path = report_path
 
     def makeTitle(self):
         '''Создание заголовка отчета'''
-        self.title.append(f"# Еженедельный отчет за период с {self.data['start_date']} по {self.data['last_date']}\n\n")
+        self.title.append(f"# {self.getReportType()} за период с {self.data['start_date']} по {self.data['last_date']}\n\n")
+
+    def getReportType(self):
+        match self.type:
+            case 'week':
+                return 'Еженедельный отчет'
+            case 'period':
+                return 'Отчет'
+        return ''
 
     def makeShortPart(self):
         '''Создание краткой части отчета'''
         self.short_part.append(f"Количество дней в периоде: {self.data['days']}\n")
         self.short_part.append(f"Количество проанализированных дней: {self.data['days_analyst']}\n")
         self.short_part.append(f"Даты, для которых не найдена заметка: {self.data['lost_dates']}\n")
-        self.short_part.append(f"Темы недели: {self.data['themes']}\n")
         self.short_part.append(f"Всего осмысленных помидорок: {self.data['total_pom']}\n")
         self.short_part.append(f"Процент учтенных осмысленных помидорок относительно максимально возможного за период: {self.data['effective_all_days']}\n")
         self.short_part.append(f"Процент учтенных осмысленных помидорок относительно проанализированных дней: {self.data['effective_know_days']}\n")
@@ -87,15 +99,15 @@ class WeekVisualizerManager:
     def makeDetailPart(self):
         '''Создание детализированной части отчета'''
         self.detail_part.append(f"Учет помидорок для тем по проектам:\n")
-        for theme in self.data['themes']:
-            self.detail_part.append(f"{theme}\n")
-            for project in self.data[theme].keys():
-                self.detail_part.append(f"\t{project} - {self.data[theme][project]}\n")
-            self.detail_part.append(f'\n')
+        importer = DictImporter()
+        root = importer.import_(self.detail)
+        for pre, fill, node in RenderTree(root):
+            self.detail_part.append("%s%s - %s\n" % (pre, node.id, node.pom_num))
+
 
     def jsonOutput(self, output):
         '''Вывод в json файл'''
-        filename = f"Еженедельный отчет с {self.data['start_date']} по {self.data['last_date']}"
+        filename = f"{self.getReportType()} с {self.data['start_date']} по {self.data['last_date']}"
         with open(self.report_path + '\\' + filename + '.json', 'w') as outfile:
             json.dump(self.data, outfile, indent=4, ensure_ascii=False)
 
@@ -105,8 +117,8 @@ class WeekVisualizerManager:
 
     def fileOutput(self, output):
         '''Вывод в md файл'''
-        filename = f"Еженедельный отчет с {self.data['start_date']} по {self.data['last_date']}"
-        with open(self.report_path + '\\' + filename + '.md', 'w') as outfile:
+        filename = f"{self.getReportType()} с {self.data['start_date']} по {self.data['last_date']}"
+        with open(self.report_path + '\\' + filename + '.md', 'w', encoding="utf-8") as outfile:
             for line in output:
                 outfile.write(line)             
 
