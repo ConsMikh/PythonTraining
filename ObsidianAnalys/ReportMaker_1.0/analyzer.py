@@ -1,6 +1,7 @@
 import pandas as pd
 import datetime
 import configparser
+import os
 
 from parser import Parser
 
@@ -19,7 +20,9 @@ class WeekAnalyzerManager():
         self.analyst = analyst
         self.settings_path = settingspath
         self.config = configparser.ConfigParser()
-        self.config.read('D:\\3. Михайлов\\Develop\\PythonTraining\\PythonTraining\\ObsidianAnalys\\ReportMaker_1.0\\' + self.settings_path)
+        dirname, _ = os.path.split(os.path.abspath(__file__))
+        with open(dirname + '\\'+self.settings_path) as f:
+            self.config.read_file(f)
         self.norma_pom = self.config['analyst']['norma_pom']
         self.analyst_result = {
             'start_date': self.start_date,

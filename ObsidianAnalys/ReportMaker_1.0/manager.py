@@ -33,6 +33,8 @@
 
 import datetime
 import configparser
+import os
+import sys
 
 
 from analyzer import WeekAnalyzerManager
@@ -83,11 +85,10 @@ class WeekManager():
     def checkSettings(self):
         '''Проверка файла настроек'''
         try:
-            
-            self.config.read('D:\\3. Михайлов\\Develop\\PythonTraining\\PythonTraining\\ObsidianAnalys\\ReportMaker_1.0\\'+self.settingspath)
-        except:
-            self.log.append(f'Файл с настройками недоступен\n')
-        else:
+            # path = 'ObsidianAnalys\ReportMaker_1.0\setting.ini'
+            dirname, _ = os.path.split(os.path.abspath(__file__))
+            with open(dirname + '\\'+'setting.ini') as f:
+                self.config.read_file(f)
             if self.config.get('local_path','week_report') == '':
                 self.log.append(f'Отсутсвует путь до папки с еженедельными отчетами\n')
             if self.config['local_path']['daily_notes'] == '':
@@ -96,6 +97,8 @@ class WeekManager():
                 self.log.append(f'Отсутсвует путь до папки с заметками\n')
             if self.config['analyst']['norma_pom'] == '':
                 self.log.append(f'Отсутсвует нормативное значение помидорок\n')
+        except:
+            self.log.append(f'Файл с настройками недоступен\n')
 
     def isTaskValid(self):
         '''Проверка параметров отчета на валидность'''

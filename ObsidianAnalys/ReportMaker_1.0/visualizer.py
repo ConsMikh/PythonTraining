@@ -114,6 +114,7 @@ class WeekVisualizerManager:
     def screenOutput(self, output):
         '''Вывод на экран'''
         print(*output)
+        input()
 
     def fileOutput(self, output):
         '''Вывод в md файл'''
