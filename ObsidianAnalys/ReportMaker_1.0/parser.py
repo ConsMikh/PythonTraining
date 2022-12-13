@@ -38,7 +38,7 @@ class Parser():
         Получится, что все узлы будут содержать сумму помидорок для всех детей
         '''
         levels_list = [[node for node in children] for children in LevelOrderGroupIter(self.root)]
-
+        # points = points if points else [] - идея для замены сложного кода на простой
         for level_list in list(reversed(levels_list[:-1])):
             for node in level_list:
                 for childnode in node.children:
