@@ -44,7 +44,7 @@ s.silly = "funny"
 s.silly
 del s.silly
 
-# Применение декоратора для кеширования запроса, чтобы сократить время
+# Применение декоратора для кеширования запроса, чтобы сократить время загрузки страницы
 from urllib.request import urlopen
 class WebPage:
     def __init__(self, url):
