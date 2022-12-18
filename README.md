@@ -4,6 +4,7 @@
 [18 Фишек Python о которых мало кто говорит](https://youtu.be/5yrit_XDgOQ)
 [Разбор параметров командной строки](https://jenyay.net/Programming/Argparse)
 [Работа с деревьями](https://anytree.readthedocs.io/en/latest/index.html)
+[Скачивание звука с YouTube](https://www.youtube.com/watch?v=H8RBMVTBYGw&list=WL&index=15)
 
 ## Virtual Envirements
 [Ошибка «Невозможно загрузить файл ….ps1, так как выполнение сценариев отключено в этой системе»](https://zawindows.ru/решение-проблемы-невозможно-загруз/)
