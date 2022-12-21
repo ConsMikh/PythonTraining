@@ -12,6 +12,10 @@
 Get-ExecutionPolicy
 Set-ExecutionPolicy unrestricted
 
+## Unit testing
+### Pytest
+[Документация на русском](https://pytest-docs-ru.readthedocs.io/ru/latest/contents.html#toc)
+[Настройка VS Code](https://code.visualstudio.com/docs/python/testing)
 
 ## Pandas
 [Применение SQL к DataFrame](https://towardsdatascience.com/how-to-use-sql-in-pandas-62d8a0f6341)<br>
