@@ -46,5 +46,9 @@ Set-ExecutionPolicy unrestricted
     - массовое переименование функций в файлах
     - работа с репозиториями<br>
 [Выложить свой проект на GitHub c VScode за 2 минуты](https://www.youtube.com/watch?v=rGMdtlAMmE0)<br>
-[Git config: настройка (редактор, пользователь, команды)](https://youtu.be/6k8pNsCLtFI)
-[Установка git bash в терминал VS Code для Windows](https://youtu.be/6HEB72EczL8)
+[Git config: настройка (редактор, пользователь, команды)](https://youtu.be/6k8pNsCLtFI)<br>
+[Установка git bash в терминал VS Code для Windows](https://youtu.be/6HEB72EczL8)<br>
+[Setting Up VSCode For Python Programming](https://www.youtube.com/watch?v=W--_EOzdTHk&list=WL&index=21)
+
+
+
