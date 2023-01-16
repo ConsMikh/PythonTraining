@@ -26,6 +26,7 @@ class Card:
     @classmethod
     def from_dict(cls, d):
         return Card(**d)
+
     def to_dict(self):
         return asdict(self)
 
