@@ -49,6 +49,6 @@ Set-ExecutionPolicy unrestricted
 [Git config: настройка (редактор, пользователь, команды)](https://youtu.be/6k8pNsCLtFI)<br>
 [Установка git bash в терминал VS Code для Windows](https://youtu.be/6HEB72EczL8)<br>
 [Setting Up VSCode For Python Programming](https://www.youtube.com/watch?v=W--_EOzdTHk&list=WL&index=21)
-
+[Настройка сниппетов](https://snippet-generator.app/?description=try_exp&tabtrigger=try&snippet=try%3A%0A++++pass%0Aexcept+Exception+as+e%3A%0A+++pass&mode=vscode)
 
 
