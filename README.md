@@ -23,6 +23,7 @@ Set-ExecutionPolicy unrestricted
 [Графики в Pandas](https://python-scripts.com/plot-with-pandas)<br>
 [Шпаргалка по pandas](https://habr.com/ru/company/ruvds/blog/494720/)<br>
 [Pandas Python агрегация данных сводные таблицы](https://youtu.be/3FKTUa7y7jQ)
+[25 Nooby Pandas Coding Mistakes You Should NEVER make](https://youtu.be/_gaAoJBMJ_Q)
 
 ## Visualization
 #### Matplotlib
